@@ -1,0 +1,13 @@
+name = "ManningLiveProject"
+uuid = "e4dbdedc-b2e3-45eb-bd79-1311c5fc9eac"
+authors = ["Fred Ciscuolo"]
+version = "1.0.0-DEV"
+
+[compat]
+julia = "1.8"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

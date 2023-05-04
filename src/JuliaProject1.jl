@@ -96,4 +96,51 @@ sales_order = Dict("eggs" => 6, "bread" => 6, "tomatoes" => 3, "candy"=>30, "bag
 sell(store, sales_order)
 @printf "Final funds = %.2f \n" store.funds
 
+function denomination_count!(amount::Int,denomination::Int)
+    count = Int(floor(amount/denomination))
+    amount -= count * denomination
+    amount, count
+end
+
+# give change function
+function give_change(price::Float64, given::Float64)
+    amounts::Array{Int} = [10000, 5000, 2000, 1000, 500, 100, 25, 10, 5,1]
+    change_units::Array{String} = ["hundreds","fifties","twenties","tens","fives", "ones",
+        "quarters","dimes","nickels","pennies"]
+    change_result = Dict("hundreds"=>0, "fifties"=>0,"twenties"=>0, "fives"=>0,"ones"=>0,
+        "quarters"=>0, "dimes"=>0, "nickels"=> 0, "pennies"=>0)
+    if (given > price)
+        price_int = Int(floor(price * 100))
+        given_int = Int(floor(given * 100))
+        change_owed = given_int - price_int
+        @printf "Change required = \$%.2f \n" change_owed/100.0
+        for n in eachindex(amounts)
+            change_owed, count = denomination_count!(change_owed,amounts[n])
+            result_key = change_units[n]
+            change_result[result_key] = count
+        end
+        display_change(change_result)
+    elseif (price > given)
+        @printf "Insuffucient money, \$%.2f, provided to cover cost, \$%.2f \n" given price
+    else 
+        @printf "No change is necessary\n"
+    end
+end
+
+function display_change(change_dict::Dict{String,Int})
+    change_units::Array{String} = ["hundreds","fifties","twenties","tens","fives", "ones",
+        "quarters","dimes","nickels","pennies"]
+     for n in eachindex(change_units)
+            denom = change_units[n]
+            if(change_dict[denom] > 0)
+                @printf "%d  %s \n" change_dict[denom] denom
+            end
+    end
+ end
+
+   give_change(649.22, 700.00)
+   give_change(46.98, 1000.00)
+   give_change(2.00,2.00)
+   give_change(500.00,100.00)
+
 end

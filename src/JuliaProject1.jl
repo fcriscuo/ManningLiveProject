@@ -138,7 +138,7 @@ function display_change(change_dict::Dict{String,Int})
     end
  end
 
-   give_change(649.22, 700.00)
+   give_change(649.22, 700.00) 
    give_change(46.98, 1000.00)
    give_change(2.00,2.00)
    give_change(500.00,100.00)
